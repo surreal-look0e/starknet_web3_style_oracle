@@ -41,6 +41,7 @@ mod web3_style_oracle {
             style
         }
 
+             /// Returns the last caller and the last computed style index.
         #[view]
         fn get_last_style(self: @Storage) -> (ContractAddress, u8) {
             let caller: ContractAddress = self.last_caller.read();
