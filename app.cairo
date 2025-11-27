@@ -28,8 +28,11 @@ mod web3_style_oracle {
 
     #[contractimpl]
     impl Web3StyleOracleImpl of web3_style_oracle::Web3StyleOracleImpl {
+          /// Choose a Web3 style (Aztec / Zama / Soundness) based on three preference scores.
+        /// Returns: 0 = Aztec-style, 1 = Zama-style, 2 = Soundness-first.
         #[external]
         fn choose_style(ref self: Storage, privacy: u8, fhe: u8, soundness: u8) -> u8 {
+
             let caller: ContractAddress = get_caller_address();
             let style: u8 = compute_style(privacy, fhe, soundness);
 
