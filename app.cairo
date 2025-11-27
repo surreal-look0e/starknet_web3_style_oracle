@@ -7,7 +7,9 @@
 mod web3_style_oracle {
     use starknet::ContractAddress;
     use starknet::get_caller_address;
-
+   const STYLE_AZTEC: u8 = 0_u8;
+    const STYLE_ZAMA: u8 = 1_u8;
+    const STYLE_SOUND: u8 = 2_u8;
     #[storage]
     struct Storage {
         last_caller: ContractAddress,
