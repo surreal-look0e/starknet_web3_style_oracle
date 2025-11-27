@@ -8,7 +8,12 @@ mod web3_style_oracle {
     use starknet::ContractAddress;
     use starknet::get_caller_address;
 
-    #[storage]
+       #[storage]
+    struct Storage {
+        last_caller: ContractAddress, // address of last user who called choose_style
+        last_style: u8,               // last computed style index (0, 1, or 2)
+    }
+
     struct Storage {
         last_caller: ContractAddress,
         last_style: u8,
