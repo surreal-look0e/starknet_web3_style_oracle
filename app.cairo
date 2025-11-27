@@ -76,6 +76,6 @@ mod web3_style_oracle {
             best_score = sound_score;
         }
 
-        best_idx
+               return best_idx;
     }
 }
