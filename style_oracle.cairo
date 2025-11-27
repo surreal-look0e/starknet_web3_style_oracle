@@ -26,19 +26,24 @@ mod web3_style_oracle {
         configs: LegacyMap<ContractAddress, StyleConfig>,
     }
 
+       /// Emitted whenever an address updates its style configuration.
     #[event]
     #[derive(Drop, starknet::Event)]
     enum Event {
         StyleUpdated: StyleUpdated,
     }
 
+    /// Payload for the `StyleUpdated` event.
     #[derive(Drop, Serde)]
     struct StyleUpdated {
+        /// Address whose config was updated.
         owner: ContractAddress,
         privacy: u8,
         soundness: u8,
         performance: u8,
+        /// Derived average score.
         score: u8,
+        /// Derived style bucket.
         class: u8,
     }
 
