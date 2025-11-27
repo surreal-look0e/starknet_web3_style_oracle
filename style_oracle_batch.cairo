@@ -195,4 +195,17 @@ mod style_oracle_batch {
             self.count_soundness_first.read(),
         )
     }
+    // -----------------------------------------------------------------
+    // Example frontend flow (off-chain):
+    //
+    // 1. Call `preview_scores(privacy, fhe, soundness)` and
+    //    `preview_style_index(...)` to show the user what would happen.
+    // 2. If they confirm, send a transaction to:
+    //       choose_style_for_caller(privacy, fhe, soundness)
+    // 3. Show them their last choice via `get_my_last_style()`.
+    // 4. For overall analytics dashboards, use `get_style_counts()`
+    //    and `get_total_style_calls()`.
+    // -----------------------------------------------------------------
+}
+
 }
