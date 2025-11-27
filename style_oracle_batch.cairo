@@ -76,6 +76,9 @@ mod style_oracle_batch {
         (aztec_score, zama_score, soundness_score)
     }
 
+     /// Given three scores, pick the best style index:
+    /// 0 = Aztec, 1 = Zama, 2 = Soundness-first.
+    /// In case of ties, the lowest index wins (0 > 1 > 2).
     fn choose_best_style(
         aztec_score: u64,
         zama_score: u64,
@@ -83,6 +86,7 @@ mod style_oracle_batch {
     ) -> u8 {
         let mut best_index: u8 = 0_u8;
         let mut best_score: u64 = aztec_score;
+
 
         if zama_score > best_score {
             best_score = zama_score;
