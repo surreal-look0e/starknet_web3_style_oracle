@@ -2,6 +2,10 @@
 // Extended Web3 style oracle for StarkNet (Cairo 1)
 
 #![no_main]
+    // Style index constants.
+    const STYLE_AZTEC: u8 = 0_u8;
+    const STYLE_ZAMA: u8 = 1_u8;
+    const STYLE_SOUNDNESS_FIRST: u8 = 2_u8;
 
 use core::traits::Into;
 use starknet::ContractAddress;
