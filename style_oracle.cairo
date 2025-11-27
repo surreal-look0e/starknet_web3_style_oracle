@@ -142,5 +142,17 @@ mod web3_style_oracle {
             ),
             Option::None(_) => (0_u8, 0_u8, 0_u8, 0_u8, 0_u8),
         }
+       /// View: get (score, class) for a given owner.
+    /// Returns (0, 0) if there is no stored config.
+    #[view]
+    fn get_style_summary(
+        self: @Storage,
+        owner: ContractAddress,
+    ) -> (u8, u8) {
+        match self.configs.read(owner) {
+            Option::Some(cfg) => (cfg.score, cfg.class),
+            Option::None(_) => (0_u8, 0_u8),
+        }
     }
+ }
 }
