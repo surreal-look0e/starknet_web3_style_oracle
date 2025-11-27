@@ -1,5 +1,10 @@
+// SPDX-License-Identifier: MIT
+// Simple batch style oracle for StarkNet: classifies projects
+// into one of three style archetypes based on slider inputs.
+
 // style_oracle_batch.cairo
 // Extended Web3 style oracle for StarkNet (Cairo 1)
+// style_oracle_batch.cairo
 
 #![no_main]
 
