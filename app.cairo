@@ -48,7 +48,7 @@ mod web3_style_oracle {
             (caller, style)
         }
     }
-
+        // Max individual preference is 100, so scores remain safely within u16 range.
     fn compute_style(privacy: u8, fhe: u8, soundness: u8) -> u8 {
         let p: u16 = privacy.into();
         let f: u16 = fhe.into();
