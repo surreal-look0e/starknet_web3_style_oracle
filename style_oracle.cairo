@@ -88,14 +88,15 @@ mod web3_style_oracle {
         (score, class)
     }
 
-    /// External: store the caller's config in contract storage.
-    #[external]
+        #[external]
     fn set_style(
         ref self: Storage,
+        // TODO: consider enforcing 0–100 bounds for these inputs.
         privacy: u8,
         soundness: u8,
         performance: u8,
     ) {
+
         let owner: ContractAddress = get_caller_address();
 
         let score: u8 = compute_score(privacy, soundness, performance);
