@@ -21,8 +21,10 @@ mod web3_style_oracle {
         class: u8,
     }
 
+      /// Contract storage.
     #[storage]
     struct Storage {
+        /// Mapping from owner address -> saved style configuration.
         configs: LegacyMap<ContractAddress, StyleConfig>,
     }
 
