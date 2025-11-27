@@ -126,7 +126,7 @@ mod web3_style_oracle {
     }
 
     /// View: read a stored config for a given address.
-    /// If none exists yet, returns zeros.
+    /// If none exists yet, returns (0, 0, 0, 0, 0).
     #[view]
     fn get_style(
         self: @Storage,
