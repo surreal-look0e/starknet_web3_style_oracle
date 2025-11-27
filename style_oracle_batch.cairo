@@ -133,22 +133,23 @@ mod style_oracle_batch {
         // Store the result per caller.
         self.style_by_caller.write(caller, style_index);
 
-        // Update global counters.
+           // Update global counters.
         match style_index {
-            0_u8 => {
+            STYLE_AZTEC => {
                 let current = self.count_aztec.read();
                 self.count_aztec.write(current + 1_u64);
             },
-            1_u8 => {
+            STYLE_ZAMA => {
                 let current = self.count_zama.read();
                 self.count_zama.write(current + 1_u64);
             },
             _ => {
-                // style_index == 2
+                // STYLE_SOUNDNESS_FIRST
                 let current = self.count_soundness_first.read();
                 self.count_soundness_first.write(current + 1_u64);
             },
         }
+
 
         // Emit event with scores for analytics.
         self.emit(
