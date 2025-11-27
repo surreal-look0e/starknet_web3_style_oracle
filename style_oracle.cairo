@@ -48,7 +48,8 @@ mod web3_style_oracle {
         // nothing to initialize
     }
 
-    /// Compute the average style score (0–100) from three 0–100 inputs.
+            // Safe because avg is in [0, 100], fits in u8.
+        avg.try_into().unwrap()
     fn compute_score(privacy: u8, soundness: u8, performance: u8) -> u8 {
         // Work in u16 to avoid overflow, then cast back.
         let p: u16 = privacy.into();
