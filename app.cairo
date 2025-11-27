@@ -63,18 +63,19 @@ mod web3_style_oracle {
         // Soundness-first: strongest focus on soundness, some privacy.
         let sound_score: u16 = s * 4_u16 + p;
 
-        let mut best_idx: u8 = 0_u8;
+              let mut best_idx: u8 = STYLE_AZTEC;
         let mut best_score: u16 = aztec_score;
 
-        if zama_score > best_score {
-            best_idx = 1_u8;
+            if zama_score > best_score {
+            best_idx = STYLE_ZAMA;
             best_score = zama_score;
         }
 
         if sound_score > best_score {
-            best_idx = 2_u8;
+            best_idx = STYLE_SOUND;
             best_score = sound_score;
         }
+
 
         best_idx
     }
