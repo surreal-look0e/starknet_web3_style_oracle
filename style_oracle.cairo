@@ -143,4 +143,13 @@ mod web3_style_oracle {
             Option::None(_) => (0_u8, 0_u8, 0_u8, 0_u8, 0_u8),
         }
     }
+    // -------------------------------------------------------------------------
+    // Example usage (off-chain / frontend):
+    //
+    // 1. Call `preview_gauge(80, 70, 60)` to show a preview.
+    // 2. If the user confirms, send a transaction to `set_style(80, 70, 60)`.
+    // 3. Later, read back with `get_my_style()` or `get_style_summary(owner)`.
+    // -------------------------------------------------------------------------
+}
+
 }
