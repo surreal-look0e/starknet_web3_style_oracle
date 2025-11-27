@@ -124,11 +124,11 @@ mod style_oracle_batch {
     ) -> u8 {
         let caller: ContractAddress = get_caller_address();
 
-        let (aztec_score, zama_score, soundness_score) =
-            super::compute_scores(privacy, fhe, soundness);
+             let (aztec_score, zama_score, soundness_score) =
+            compute_scores(privacy, fhe, soundness);
 
         let style_index: u8 =
-            super::choose_best_style(aztec_score, zama_score, soundness_score);
+            choose_best_style(aztec_score, zama_score, soundness_score);
 
         // Store the result per caller.
         self.style_by_caller.write(caller, style_index);
