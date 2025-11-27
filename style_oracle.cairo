@@ -142,5 +142,25 @@ mod web3_style_oracle {
             ),
             Option::None(_) => (0_u8, 0_u8, 0_u8, 0_u8, 0_u8),
         }
+       /// View: return true if the given owner has an existing stored config.
+    #[view]
+    fn is_configured(
+        self: @Storage,
+        owner: ContractAddress,
+    ) -> bool {
+        match self.configs.read(owner) {
+            Option::Some(_) => true,
+            Option::None(_) => false,
+        }
     }
+
+    /// View: check if the caller has ever configured a style.
+    #[view]
+    fn am_i_configured(
+        self: @Storage,
+    ) -> bool {
+        let owner: ContractAddress = get_caller_address();
+        is_configured(self, owner)
+    }
+ }
 }
