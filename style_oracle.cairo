@@ -48,18 +48,20 @@ mod web3_style_oracle {
         // nothing to initialize
     }
 
-    /// Compute the average style score (0–100) from three 0–100 inputs.
+       /// Compute the average style score (0–100) from three 0–100 inputs.
+    /// Note: function does not clamp or validate the inputs.
     fn compute_score(privacy: u8, soundness: u8, performance: u8) -> u8 {
         // Work in u16 to avoid overflow, then cast back.
         let p: u16 = privacy.into();
         let s: u16 = soundness.into();
-        let t: u16 = performance.into();
+        let perf: u16 = performance.into();
 
-        let sum: u16 = p + s + t;
+        let sum: u16 = p + s + perf;
         let avg: u16 = sum / 3_u16;
 
         avg.try_into().unwrap()
     }
+
 
     /// Classify the score into:
     /// 0 = conservative / low-risk
