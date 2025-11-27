@@ -81,17 +81,17 @@ mod style_oracle_batch {
         zama_score: u64,
         soundness_score: u64,
     ) -> u8 {
-        let mut best_index: u8 = 0_u8;
+             let mut best_index: u8 = STYLE_AZTEC;
         let mut best_score: u64 = aztec_score;
 
         if zama_score > best_score {
             best_score = zama_score;
-            best_index = 1_u8;
+            best_index = STYLE_ZAMA;
         }
 
         if soundness_score > best_score {
             best_score = soundness_score;
-            best_index = 2_u8;
+            best_index = STYLE_SOUNDNESS_FIRST;
         }
 
         best_index
