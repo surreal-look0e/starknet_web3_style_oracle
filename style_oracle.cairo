@@ -1,4 +1,5 @@
-// style_oracle.cairo
+// SPDX-License-Identifier: MIT
+// web3_style_oracle: simple on-chain style gauge for privacy / soundness / performance.
 
 use starknet::ContractAddress;
 use starknet::get_caller_address;
