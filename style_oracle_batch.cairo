@@ -172,6 +172,8 @@ mod style_oracle_batch {
     ///
     /// NOTE: If the address never called `choose_style_for_caller`,
     /// this will return 0 (Aztec) because LegacyMap defaults to zero.
+    /// This means "never chose" and "explicitly chose Aztec" are
+    /// indistinguishable at the storage level.
     #[view]
     fn get_last_style_of(
         self: @Storage,
