@@ -75,7 +75,9 @@ mod web3_style_oracle {
         }
     }
 
-    /// Public helper: given three sliders, return (score, class)
+       /// Pure view helper: given three sliders, return (score, class).
+    /// This does *not* touch storage and can be used by frontends to
+    /// preview the gauge before calling `set_style`.
     #[view]
     fn preview_gauge(
         self: @Storage,
@@ -87,6 +89,7 @@ mod web3_style_oracle {
         let class: u8 = classify_style(score);
         (score, class)
     }
+
 
     /// External: store the caller's config in contract storage.
     #[external]
