@@ -163,6 +163,19 @@ mod style_oracle_batch {
 
         style_index
     }
+    /// Pure view: preview the three raw scores given slider inputs.
+    ///
+    /// Returns:
+    ///   (aztec_score, zama_score, soundness_first_score)
+    #[view]
+    fn preview_scores(
+        self: @Storage,
+        privacy: u16,
+        fhe: u16,
+        soundness: u16,
+    ) -> (u64, u64, u64) {
+        compute_scores(privacy, fhe, soundness)
+    }
 
     // -------------------------
     // View functions
