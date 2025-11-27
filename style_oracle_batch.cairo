@@ -7,6 +7,8 @@ use core::traits::Into;
 use starknet::ContractAddress;
 use starknet::get_caller_address;
 
+/// Classifies callers into one of three "style" archetypes and
+/// keeps global counters for how many times each has been chosen.
 #[starknet::contract]
 mod style_oracle_batch {
     use super::{Into, ContractAddress, get_caller_address};
