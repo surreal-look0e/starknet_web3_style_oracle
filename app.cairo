@@ -3,6 +3,8 @@
 // categorizes a project as Aztec-style, Zama-style, or Soundness-first
 // based on three numeric preference scores.
 
+/// StarkNet contract that maps (privacy, FHE, soundness) preferences
+/// to a simple style index: 0=Aztec, 1=Zama, 2=Soundness-first.
 #[starknet::contract]
 mod web3_style_oracle {
     use starknet::ContractAddress;
