@@ -61,10 +61,12 @@ mod web3_style_oracle {
         avg.try_into().unwrap()
     }
 
-    /// Classify the score into:
+      /// Classify the score into:
     /// 0 = conservative / low-risk
     /// 1 = balanced
     /// 2 = aggressive / perf-heavy
+    /// TODO: if this contract is ever proxied/upgradable, consider
+    /// making these thresholds configurable.
     fn classify_style(score: u8) -> u8 {
         if score <= 33_u8 {
             0_u8
