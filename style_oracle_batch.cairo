@@ -195,4 +195,14 @@ mod style_oracle_batch {
             self.count_soundness_first.read(),
         )
     }
+    /// View: return the total number of times any style was chosen.
+    #[view]
+    fn get_total_style_calls(
+        self: @Storage,
+    ) -> u64 {
+        self.count_aztec.read()
+            + self.count_zama.read()
+            + self.count_soundness_first.read()
+    }
+
 }
