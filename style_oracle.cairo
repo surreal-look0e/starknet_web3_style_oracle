@@ -42,11 +42,13 @@ mod web3_style_oracle {
         class: u8,
     }
 
-    /// (Optional) no-op constructor.
+     /// No-op constructor.
+    /// Kept for forward-compatibility in case initialization is needed later.
     #[constructor]
     fn constructor(ref self: Storage) {
         // nothing to initialize
     }
+
 
     /// Compute the average style score (0–100) from three 0–100 inputs.
     fn compute_score(privacy: u8, soundness: u8, performance: u8) -> u8 {
