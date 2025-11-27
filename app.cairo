@@ -20,10 +20,10 @@ mod web3_style_oracle {
         StyleChosen: StyleChosen,
     }
 
-    #[derive(Drop, starknet::Event)]
+      #[derive(Drop, starknet::Event)]
     struct StyleChosen {
-        caller: ContractAddress,
-        style: u8,
+        caller: ContractAddress, // caller who triggered the style decision
+        style: u8,               // chosen style index
     }
 
     #[contractimpl]
