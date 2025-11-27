@@ -195,4 +195,19 @@ mod style_oracle_batch {
             self.count_soundness_first.read(),
         )
     }
+    /// View: get a small debug snapshot for a given address:
+    /// (last_style_index, count_aztec, count_zama, count_soundness_first)
+    #[view]
+    fn get_debug_snapshot(
+        self: @Storage,
+        caller: ContractAddress,
+    ) -> (u8, u64, u64, u64) {
+        (
+            self.style_by_caller.read(caller),
+            self.count_aztec.read(),
+            self.count_zama.read(),
+            self.count_soundness_first.read(),
+        )
+    }
+
 }
