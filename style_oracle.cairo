@@ -12,14 +12,21 @@ mod web3_style_oracle {
     // privacy / soundness / performance = 0..100
     // score = average of the three
     // class = 0,1,2 buckets
+       /// On-chain style configuration associated with one address.
     #[derive(Copy, Drop, Serde)]
     struct StyleConfig {
+        /// 0–100: emphasis on privacy (higher = more privacy-focused).
         privacy: u8,
+        /// 0–100: emphasis on soundness / correctness.
         soundness: u8,
+        /// 0–100: emphasis on performance / throughput.
         performance: u8,
+        /// 0–100: simple average of the three sliders.
         score: u8,
+        /// 0,1,2 bucket derived from `score` (0 = conservative, 1 = balanced, 2 = aggressive).
         class: u8,
     }
+
 
     #[storage]
     struct Storage {
