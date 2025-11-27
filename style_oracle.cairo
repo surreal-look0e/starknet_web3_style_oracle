@@ -4,6 +4,8 @@ use starknet::ContractAddress;
 use starknet::get_caller_address;
 use starknet::storage::LegacyMap;
 
+/// A tiny "style oracle" that stores a 0–100 style profile per address
+/// and classifies it into discrete risk/performance buckets.
 #[starknet::contract]
 mod web3_style_oracle {
     use super::{ContractAddress, get_caller_address, LegacyMap};
