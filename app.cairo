@@ -54,14 +54,14 @@ mod web3_style_oracle {
         let f: u16 = fhe.into();
         let s: u16 = soundness.into();
 
-        // Aztec-style: strong privacy, plus soundness.
+               // Weighted scoring model (purely illustrative):
+        // Aztec     = 3 * privacy + 2 * soundness
+        // Zama      = 3 * privacy + 3 * FHE
+        // Soundness = 4 * soundness + 1 * privacy
         let aztec_score: u16 = p * 3_u16 + s * 2_u16;
-
-        // Zama-style: strong privacy plus FHE-heavy compute.
         let zama_score: u16 = p * 3_u16 + f * 3_u16;
-
-        // Soundness-first: strongest focus on soundness, some privacy.
         let sound_score: u16 = s * 4_u16 + p;
+
 
         let mut best_idx: u8 = 0_u8;
         let mut best_score: u16 = aztec_score;
