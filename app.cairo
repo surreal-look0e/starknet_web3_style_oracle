@@ -1,7 +1,7 @@
 // app.cairo
 // Cairo 1 contract for StarkNet: a tiny Web3 style oracle that
 // categorizes a project as Aztec-style, Zama-style, or Soundness-first
-// based on three numeric preference scores.
+// based on three numeric preference scores (0–100).
 
 #[starknet::contract]
 mod web3_style_oracle {
