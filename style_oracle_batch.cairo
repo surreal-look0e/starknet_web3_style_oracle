@@ -63,6 +63,19 @@ mod style_oracle_batch {
         let p: u64 = privacy.into();
         let f: u64 = fhe.into();
         let s: u64 = soundness.into();
+    /// Pure view: preview which style index would be chosen
+    /// for the given sliders without updating storage.
+    #[view]
+    fn preview_style_index(
+        self: @Storage,
+        privacy: u16,
+        fhe: u16,
+        soundness: u16,
+    ) -> u8 {
+        let (aztec_score, zama_score, soundness_score) =
+            compute_scores(privacy, fhe, soundness);
+        choose_best_style(aztec_score, zama_score, soundness_score)
+    }
 
         // Same scoring model as described in README:
         //
