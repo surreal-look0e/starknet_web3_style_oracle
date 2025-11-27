@@ -45,6 +45,7 @@ mod web3_style_oracle {
         fn get_last_style(self: @Storage) -> (ContractAddress, u8) {
             let caller: ContractAddress = self.last_caller.read();
             let style: u8 = self.last_style.read();
+            // Future idea: emit a more descriptive event using style_label(style).
             (caller, style)
         }
     }
