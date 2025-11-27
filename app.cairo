@@ -5,8 +5,9 @@
 
 #[starknet::contract]
 mod web3_style_oracle {
+     use starknet::get_caller_address;
     use starknet::ContractAddress;
-    use starknet::get_caller_address;
+
 
     #[storage]
     struct Storage {
