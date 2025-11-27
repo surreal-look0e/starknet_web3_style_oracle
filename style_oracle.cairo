@@ -88,7 +88,8 @@ mod web3_style_oracle {
         (score, class)
     }
 
-    /// External: store the caller's config in contract storage.
+    /// External: store the caller's config in contract storage and
+    /// emit a `StyleUpdated` event.
     #[external]
     fn set_style(
         ref self: Storage,
