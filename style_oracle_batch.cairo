@@ -20,7 +20,9 @@ mod style_oracle_batch {
         // Per-caller last chosen style index (0, 1, or 2).
         style_by_caller: LegacyMap::<ContractAddress, u8>,
 
-        // Global counters for analytics.
+                /// Global counter: how many times style 0 (Aztec) was chosen.
+        /// NOTE: This is a simple monotonically increasing counter and
+        /// does not protect against theoretical u64 overflow (extremely unlikely).
         count_aztec: u64,
         count_zama: u64,
         count_soundness_first: u64,
