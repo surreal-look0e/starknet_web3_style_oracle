@@ -164,10 +164,10 @@ mod style_oracle_batch {
         style_index
     }
 
+   
     // -------------------------
     // View functions
     // -------------------------
-
     /// Return the last chosen style for a specific address.
     ///
     /// NOTE: If the address never called `choose_style_for_caller`,
