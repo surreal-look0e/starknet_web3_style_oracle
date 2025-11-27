@@ -12,19 +12,22 @@ mod style_oracle_batch {
     use super::{Into, ContractAddress, get_caller_address};
     use starknet::storage::LegacyMap;
 
-    // -------------------------
+      // -------------------------
     // Storage
     // -------------------------
     #[storage]
     struct Storage {
-        // Per-caller last chosen style index (0, 1, or 2).
+        /// Per-caller last chosen style index (0 = Aztec, 1 = Zama, 2 = Soundness-first).
         style_by_caller: LegacyMap::<ContractAddress, u8>,
 
-        // Global counters for analytics.
+        /// Global counter: how many times style 0 (Aztec) was chosen.
         count_aztec: u64,
+        /// Global counter: how many times style 1 (Zama) was chosen.
         count_zama: u64,
+        /// Global counter: how many times style 2 (Soundness-first) was chosen.
         count_soundness_first: u64,
     }
+
 
     // -------------------------
     // Events
