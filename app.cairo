@@ -48,6 +48,7 @@ mod web3_style_oracle {
             (caller, style)
         }
     }
+        // Higher scores indicate a better fit for each style.
 
     fn compute_style(privacy: u8, fhe: u8, soundness: u8) -> u8 {
         let p: u16 = privacy.into();
