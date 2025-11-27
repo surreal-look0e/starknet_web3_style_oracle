@@ -143,4 +143,14 @@ mod web3_style_oracle {
             Option::None(_) => (0_u8, 0_u8, 0_u8, 0_u8, 0_u8),
         }
     }
+    /// View: read the stored config for the caller.
+    /// If none exists yet, returns (0, 0, 0, 0, 0).
+    #[view]
+    fn get_my_style(
+        self: @Storage,
+    ) -> (u8, u8, u8, u8, u8) {
+        let owner: ContractAddress = get_caller_address();
+        get_style(self, owner)
+    }
+
 }
