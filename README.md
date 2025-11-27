@@ -1,195 +1,183 @@
 # starknet_web3_style_oracle
 
-starknet_web3_style_oracle is a minimal Cairo 1 smart contract for StarkNet (zk-rollup / ZK-L2). It acts as a tiny “style oracle” for Web3 architectures and is conceptually inspired by:
+A minimal StarkNet (Cairo 1) smart contract that classifies a Web3 project into one of three conceptual architectures inspired by Aztec-style zk rollups, Zama-style FHE compute stacks, and soundness-first protocol labs.  
+The contract takes three preference scores and outputs a single on-chain style index.
 
-Aztec-style zk privacy rollups (encrypted balances, zk circuits over L1)
-Zama-style FHE compute stacks (fully homomorphic encryption with Web3 anchoring)
-Soundness-first protocol labs (formal specifications and correctness-first design)
 
-The contract takes three small preference scores as input and returns a single on-chain style index that can be consumed by other StarkNet contracts or off-chain tooling.
+# 1. Repository Structure
 
+This repository contains exactly two files:
 
-Repository structure
+1. app.cairo – the Cairo 1 smart contract implementing the style oracle  
+2. README.md – this documentation
 
-There are exactly two files in this repository.
 
-1. app.cairo – the StarkNet contract (Cairo 1) with the main logic
-2. README.md – this documentation, including installation, usage, expected result and notes
+# 2. Overview
 
+starknet_web3_style_oracle is a simple classification oracle.  
+You provide three integer preferences:
 
-High-level behaviour
+privacy  
+fhe  
+soundness
 
-The contract exposes two interfaces:
+The contract computes three weighted scores corresponding to:
 
-External function
+Aztec-style zk privacy rollup  
+Zama-style FHE compute stack  
+Soundness-first protocol lab  
 
-choose_style(privacy: u8, fhe: u8, soundness: u8) -> u8
+The highest score determines the output.  
+The result is stored on-chain, emitted as an event, and can be queried later.
 
-View function
 
-get_last_style() -> (ContractAddress, u8)
+# 3. Conceptual Background
 
-Inputs to choose_style
+## 3.1 Aztec-Style zk Privacy Rollups  
+Systems with encrypted balances, private transactions, and zk circuits.  
+High emphasis on privacy and verifiable correctness.
 
-privacy (0–10 recommended range)
-How important strong privacy and encryption are for this project.
-Higher values suggest Aztec-style or Zama-style designs.
+## 3.2 Zama-Style FHE Compute  
+Systems based on fully homomorphic encryption (FHE) that support encrypted compute.  
+High emphasis on privacy and FHE-specific compute paths.
 
-fhe (0–10 recommended range)
-How important fully homomorphic encryption (FHE) is.
-Higher values push toward Zama-style FHE compute stacks.
+## 3.3 Soundness-First Protocol Labs  
+Systems built around strict specifications, formal proofs, and correctness-first designs.  
+Emphasis on soundness, security audits, and governance clarity.
 
-soundness (0–10 recommended range)
-How important strong soundness, proofs and formal reasoning are.
-Higher values push toward soundness-first protocol lab designs.
+The contract does not represent real systems but uses these categories as conceptual benchmarks.
 
-Output from choose_style
 
-A single u8 style index with the following meaning:
+# 4. Smart Contract Functions
 
-0 – Aztec-style zk privacy rollup
-1 – Zama-style FHE compute stack
-2 – Soundness-first protocol lab
+## 4.1 choose_style(privacy, fhe, soundness)  
+External function.  
+Returns a style index (0, 1, or 2).  
+Stores the result in contract storage.  
+Emits an event with the caller and selected style.
 
-In addition, the contract stores in its storage:
+## 4.2 get_last_style()  
+View function.  
+Returns the last caller address and last selected style index.
 
-last_caller – the address of the account or contract that last called choose_style
-last_style – the last style index that was computed
 
-The view function get_last_style returns both values so that anyone can query the most recent decision.
+# 5. Scoring Logic
 
+The three input values (0–10 recommended) are converted to u16 and used to compute three internal scores:
 
-Conceptual scoring logic
+Aztec score  
+Strong weight on privacy and moderate on soundness.  
+Equation: privacy*3 + soundness*2
 
-The contract converts each u8 input into u16 values and computes three internal scores:
+Zama score  
+Strong weight on privacy and strong weight on FHE.  
+Equation: privacy*3 + fhe*3
 
-Aztec-style score
-Weighted heavily toward privacy and moderately toward soundness.
-Reflects a rollup like Aztec, where zk-powered privacy is the core product and soundness is an essential safety property.
+Soundness-first score  
+Very high weight on soundness plus a smaller privacy weight.  
+Equation: soundness*4 + privacy
 
-Zama-style score
-Weighted strongly toward both privacy and FHE.
-Represents a stack where encrypted compute and FHE pipelines are first-class citizens, while still existing in a Web3 context.
+The largest score determines the output index:
 
-Soundness-first score
-Weighted most heavily toward soundness, with a secondary weight on privacy.
-Fits research-heavy or lab-style protocols where formal proofs and clearly specified semantics matter most.
+0 → Aztec-style  
+1 → Zama-style  
+2 → Soundness-first  
 
-The style with the highest score is chosen and returned. In case of ties, the earlier style in the evaluation order wins (Aztec first, then Zama, then soundness).
 
+# 6. Installation Requirements
 
-Installation prerequisites
+To compile and deploy this contract you need:
 
-To build and deploy this contract you need:
+Cairo 1 compiler  
+StarkNet-compatible tooling (Scarb or Starknet Foundry)  
+StarkNet CLI or an equivalent client  
+A StarkNet RPC endpoint (devnet, testnet, or mainnet)  
 
-Cairo 1 toolchain compatible with StarkNet
-StarkNet CLI or a modern equivalent (for example, Starknet Foundry / Scarb plus associated tooling)
-An RPC endpoint or gateway to a StarkNet network (local devnet, testnet, or mainnet)
-Basic familiarity with compiling and deploying StarkNet contracts
 
-The exact installation commands depend on your chosen toolchain (Scarb, Starknet Foundry, or older cairo-lang). Refer to the official StarkNet and Cairo 1 documentation to install:
+# 7. Project Setup
 
-Rust and Cargo (if required by your toolchain)
-The Cairo 1 compiler
-Project management tooling such as Scarb
-StarkNet deployment tools
+Create a new StarkNet project using your preferred toolchain.  
+Copy app.cairo into your project directory (usually `src/`).  
+Add the contract to your project manifest file (e.g., Scarb.toml).  
+Compile the project to ensure app.cairo builds successfully.
 
 
-Project setup
+# 8. Deployment Steps (Conceptual)
 
-Create a new StarkNet / Cairo 1 project using your chosen toolchain.
-Place app.cairo into the src or contracts directory according to your project layout.
-Update your project manifest (for example, Scarb.toml) so that web3_style_oracle is included in the list of contracts to build.
-Compile the project using the appropriate build command for your tooling to verify that the contract compiles successfully.
+Compile the contract into Sierra and Casm artifacts.  
+Deploy it to the desired StarkNet network.  
+Record the deployed contract address.  
+Use your wallet or StarkNet CLI to interact with choose_style.  
 
 
-Deployment (conceptual)
+# 9. Using choose_style
 
-The detailed deployment process depends on the current StarkNet toolchain you use, but the general steps are:
+choose_style(privacy, fhe, soundness) → style index
 
-Connect your wallet or key management system to your chosen StarkNet network (local devnet, testnet, or mainnet).
-Use the compile output (Sierra/Casm artifacts) from your project to deploy web3_style_oracle.aleo (contract name web3_style_oracle).
-Make note of the deployed contract address on StarkNet.
-Use your wallet or client to invoke the external function choose_style on the deployed contract.
+Example interpretations:
 
+High privacy + medium FHE + high soundness → likely Aztec-style (0)  
+High privacy + high FHE + medium soundness → likely Zama-style (1)  
+Medium privacy + low FHE + very high soundness → likely Soundness-first (2)
 
-How to use choose_style in practice
+The contract stores this result and emits a StyleChosen event.
 
-When calling choose_style you pass three integers for privacy, fhe and soundness. A typical flow could look like this (described conceptually rather than as shell commands):
 
-Decide your project priorities. For example:
+# 10. Querying Stored Results
 
-Example A (privacy-heavy zk rollup like Aztec):
-privacy = 9
-fhe = 2
-soundness = 8
+Call get_last_style() to retrieve:
 
-Example B (FHE-centric analytics stack like Zama-inspired designs):
-privacy = 9
-fhe = 9
-soundness = 6
+the most recent caller address  
+the most recent selected style  
 
-Example C (pure protocol research with strong proofs):
-privacy = 5
-fhe = 1
-soundness = 10
+This allows dashboards, analytics tools, or configuration systems to track which styles are being chosen on-chain.
 
-Call choose_style with your chosen triple on StarkNet.
-The contract computes the scores, chooses the best style index, stores it in storage, emits a StyleChosen event, and returns the style index to the caller.
-You can read the on-chain event logs or use the return value directly in your client.
 
-Later, anyone can call get_last_style to see the last caller address and last style index.
+# 11. Expected Output Behavior
 
+For any input, you should expect:
 
-Expected results for conceptual examples
+One of the indices: 0, 1, or 2  
+A StyleChosen event emitted  
+The storage updated with the caller and selected style  
 
-For the given conceptual examples (actual results depend only on the arithmetic coded in app.cairo):
+This pattern enables on-chain decision logs, verifiable preference signaling, and protocol-level meta-configuration.
 
-Example A: privacy 9, fhe 2, soundness 8
-Likely output: 0
-Interpretation: The oracle suggests an Aztec-style zk privacy rollup best matches these preferences.
 
-Example B: privacy 9, fhe 9, soundness 6
-Likely output: 1
-Interpretation: The oracle suggests a Zama-style FHE compute stack is the best fit.
+# 12. Example Use Cases
 
-Example C: privacy 5, fhe 1, soundness 10
-Likely output: 2
-Interpretation: The oracle suggests a soundness-first protocol lab design.
+Classification of deployments  
+Feature-flag systems  
+Developer dashboards  
+Teaching demonstrations  
+Web3 architecture experiments integrating zk, FHE, or proof-heavy design ideas  
 
-These are not guarantees about any real system. They simply reflect the weights inside compute_style.
 
+# 13. Notes and Limitations
 
-Potential integrations in Web3
+This contract is intentionally simple.  
+It is not a formal classifier or security tool.  
+The scoring model is illustrative and subjective.  
+Real Aztec, Zama, or soundness-driven systems involve far more complexity.  
+You are encouraged to modify scoring weights or extend the architecture categories.  
 
-Some ideas for integrating starknet_web3_style_oracle inside broader Web3 and StarkNet tooling:
 
-Configuration gating
-Other StarkNet contracts can query the oracle and adjust behaviour based on the returned style index. For example:
-If style = 0, default to privacy-heavy paths, more aggressive zk proof aggregation, or Aztec-like UX patterns.
-If style = 1, emphasize FHE compatibility and off-chain encrypted compute pipelines.
-If style = 2, require additional soundness checks, such as extra governance steps or proof verification options.
+# 14. Extending the Repository
 
-Developer dashboards
-Off-chain services can call get_last_style and display the last recorded preferences and style classification in a dashboard that compares Aztec-style, Zama-style, and soundness-first projects.
+You may extend app.cairo to:
 
-Research and teaching
-The contract can be used as a teaching example for:
-Mapping abstract Web3 design trade-offs into concrete StarkNet state and events.
-Discussing how zk-rollups (like StarkNet and Aztec) and FHE stacks (like Zama) relate to high-level architectural choices.
+Add more style categories  
+Store per-caller scores or historical logs  
+Compute weighted averages over time  
+Expose configuration-dependent behavior based on selected style  
 
 
-Notes, limitations and safety
+# 15. Summary
 
-This contract is intentionally minimal and uses simple integer arithmetic. It is not a formal advisor, classifier, or threat modeling engine. Do not use it as the sole basis for economic or security decisions.
+starknet_web3_style_oracle demonstrates:
 
-The style mapping is opinionated and generic. Real projects in the Aztec or Zama ecosystems or in soundness-focused research labs may not fit neatly into the three categories.
+How Cairo 1 smart contracts can encode decision logic  
+How simple zk-inspired architectural choices can be made verifiable  
+How Web3 concepts like privacy (Aztec), FHE compute (Zama), and soundness-first design can be represented in a small on-chain tool
 
-If you intend to extend or reuse this repository:
-
-You can adjust the scoring weights in compute_style to reflect your own view of privacy, FHE, and soundness priorities.
-You can add more categories (for example, performance-first or UX-first) and extend the style index beyond 0, 1 and 2.
-You can store more metadata in storage, such as per-caller preferences or aggregated statistics.
-
-Always perform thorough security reviews and protocol analysis for real Web3, Aztec-style, Zama-style, or soundness-first deployments. This repository is designed as a small, didactic StarkNet example tying Cairo 1 contracts to the conceptual space of zk-rollups, FHE systems and soundness-driven protocol design.
-::contentReference[oaicite:0]{index=0}
+This repository provides a compact and illustrative example of combining Web3 reasoning with StarkNet smart contract capabilities.
