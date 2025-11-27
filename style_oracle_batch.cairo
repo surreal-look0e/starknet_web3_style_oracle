@@ -179,6 +179,14 @@ mod style_oracle_batch {
     ) -> u8 {
         self.style_by_caller.read(caller)
     }
+    /// View: return the last chosen style index for the caller.
+    #[view]
+    fn get_my_last_style(
+        self: @Storage,
+    ) -> u8 {
+        let caller: ContractAddress = get_caller_address();
+        self.style_by_caller.read(caller)
+    }
 
     /// Return the global counters for how many times each style
     /// has been chosen.
