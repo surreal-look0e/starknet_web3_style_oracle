@@ -43,9 +43,10 @@ mod style_oracle_batch {
         scores: (u64, u64, u64),
     }
 
-    // -------------------------
+     // -------------------------
     // Constructor
     // -------------------------
+    /// No-op constructor; all storage is zero-initialized by default.
     #[constructor]
     fn constructor(ref self: Storage) {
         // Nothing special, everything defaults to zero.
