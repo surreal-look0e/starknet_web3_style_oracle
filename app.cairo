@@ -40,7 +40,7 @@ mod web3_style_oracle {
 
             style
         }
-
+const MAX_PREF: u8 = 100_u8;
         #[view]
         fn get_last_style(self: @Storage) -> (ContractAddress, u8) {
             let caller: ContractAddress = self.last_caller.read();
