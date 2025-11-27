@@ -51,14 +51,20 @@ mod style_oracle_batch {
         // Nothing special, everything defaults to zero.
     }
 
-    // -------------------------
+      // -------------------------
     // Internal scoring logic
     // -------------------------
+
+    /// Compute the three raw scores given slider inputs.
+    ///
+    /// Inputs are recommended to be in [0, 10], but this is not enforced.
+    /// Returns: (aztec_score, zama_score, soundness_first_score).
     fn compute_scores(
         privacy: u16,
         fhe: u16,
         soundness: u16,
     ) -> (u64, u64, u64) {
+
         // Cast u16 → u64 so we can multiply safely.
         let p: u64 = privacy.into();
         let f: u64 = fhe.into();
