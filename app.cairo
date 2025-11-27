@@ -8,12 +8,7 @@ mod web3_style_oracle {
     use starknet::ContractAddress;
     use starknet::get_caller_address;
 
-    #[storage]
-    struct Storage {
-        last_caller: ContractAddress,
-        last_style: u8,
-    }
-
+   struct Storage 
     #[event]
     #[derive(Drop, starknet::Event)]
     enum Event {
