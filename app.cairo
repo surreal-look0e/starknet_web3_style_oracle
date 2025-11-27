@@ -49,11 +49,7 @@ mod web3_style_oracle {
         }
     }
 
-    fn compute_style(privacy: u8, fhe: u8, soundness: u8) -> u8 {
-        let p: u16 = privacy.into();
-        let f: u16 = fhe.into();
-        let s: u16 = soundness.into();
-
+  fn compute_style(pr
         // Aztec-style: strong privacy, plus soundness.
         let aztec_score: u16 = p * 3_u16 + s * 2_u16;
 
