@@ -78,4 +78,14 @@ mod web3_style_oracle {
 
         best_idx
     }
+    fn style_label(style: u8) -> felt252 {
+        match style {
+            0_u8 => 'aztec',
+            1_u8 => 'zama',
+            2_u8 => 'sound',
+            _ => 'unknown',
+        }
+    }
+
 }
+
