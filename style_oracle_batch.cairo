@@ -26,22 +26,28 @@ mod style_oracle_batch {
         count_soundness_first: u64,
     }
 
-    // -------------------------
+       // -------------------------
     // Events
     // -------------------------
+
+    /// Emitted whenever a caller chooses a style.
     #[derive(Drop, starknet::Event)]
     #[event]
     enum Event {
         StyleChosen: StyleChosen,
     }
 
+    /// Details for the `StyleChosen` event.
     #[derive(Drop, Serde)]
     struct StyleChosen {
+        /// Address of the caller who just chose a style.
         caller: ContractAddress,
+        /// Index of the chosen style: 0 = Aztec, 1 = Zama, 2 = Soundness-first.
         style_index: u8,
-        // (aztec_score, zama_score, soundness_first_score)
+        /// Raw scores for each style: (aztec_score, zama_score, soundness_first_score).
         scores: (u64, u64, u64),
     }
+
 
     // -------------------------
     // Constructor
