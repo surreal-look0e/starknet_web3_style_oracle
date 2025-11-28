@@ -63,6 +63,9 @@ mod web3_style_oracle {
         // Soundness-first: strongest focus on soundness, some privacy.
         let sound_score: u16 = s * 4_u16 + p;
 
+        // Tie-breaking:
+        // - Aztec wins ties vs Zama and Soundness
+        // - Zama wins ties vs Soundness
         let mut best_idx: u8 = 0_u8;
         let mut best_score: u16 = aztec_score;
 
