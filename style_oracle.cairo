@@ -61,19 +61,23 @@ mod web3_style_oracle {
         avg.try_into().unwrap()
     }
 
-    /// Classify the score into:
+       /// Classify the score into:
     /// 0 = conservative / low-risk
     /// 1 = balanced
     /// 2 = aggressive / perf-heavy
     fn classify_style(score: u8) -> u8 {
+        // [0, 33] -> conservative
         if score <= 33_u8 {
             0_u8
+        // (33, 66] -> balanced
         } else if score <= 66_u8 {
             1_u8
+        // (66, 100] -> aggressive
         } else {
             2_u8
         }
     }
+
 
     /// Public helper: given three sliders, return (score, class)
     #[view]
