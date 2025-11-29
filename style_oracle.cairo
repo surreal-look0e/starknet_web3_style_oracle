@@ -75,6 +75,10 @@ mod web3_style_oracle {
         }
     }
 
+      // -------------------------------------------------------------------------
+    // Public helpers & views
+    // -------------------------------------------------------------------------
+
     /// Public helper: given three sliders, return (score, class)
     #[view]
     fn preview_gauge(
