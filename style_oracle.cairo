@@ -143,4 +143,41 @@ mod web3_style_oracle {
             Option::None(_) => (0_u8, 0_u8, 0_u8, 0_u8, 0_u8),
         }
     }
+    /// View: get (score, class) for the caller.
+    #[view]
+    fn get_my_style_summary(
+        self: @Storage,
+    ) -> (u8, u8) {
+        let owner: ContractAddress = get_caller_address();
+        get_style_summary(self, owner)
+    }
+    /// External: reset the caller's config to zeros.
+    #[external]
+    fn reset_style(ref self: Storage) {
+        let owner: ContractAddress = get_caller_address();
+
+        let cfg = StyleConfig {
+            privacy: 0_u8,
+            soundness: 0_u8,
+            performance: 0_u8,
+            score: 0_u8,
+            class: 0_u8,
+        };
+
+        self.configs.write(owner, cfg);
+
+        self.emit(
+            Event::StyleUpdated(
+                StyleUpdated {
+                    owner,
+                    privacy: 0_u8,
+                    soundness: 0_u8,
+                    performance: 0_u8,
+                    score: 0_u8,
+                    class: 0_u8,
+                }
+            )
+        );
+    }
+
 }
